@@ -15,7 +15,7 @@ public class PostServiceNoAuth implements PostService{
 
 
     @Override
-    public PostVO insertPost(PostVO postDTO) {
-        return PostVO.from(postRepository.save(postDTO.toEntity()));
+    public PostResponseDTO insertPost(PostVO postDTO) {
+        return PostResponseDTO.of(postRepository.save(postDTO.toEntity()));
     }
 }
