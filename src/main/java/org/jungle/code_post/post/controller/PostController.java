@@ -5,6 +5,7 @@ import org.jungle.code_post.post.dto.PostCreateRequestDTO;
 import org.jungle.code_post.post.dto.PostResponseDTO;
 import org.jungle.code_post.post.service.PostService;
 import org.jungle.code_post.post.service.PostServiceNoAuth;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class PostController {
 
+    @Autowired
     PostService postService = new PostServiceNoAuth();
 
     @PostMapping
