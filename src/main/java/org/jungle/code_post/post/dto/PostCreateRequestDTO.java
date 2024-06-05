@@ -1,19 +1,21 @@
 package org.jungle.code_post.post.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.jungle.code_post.post.entity.Post;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostCreateRequestDTO {
-    private final String title;
-    private final String content;
-    private final String link;
-    private final String category;
-    private final Integer score;
-    private final String author;
-    private final Integer password;
+    private String title;
+    private String content;
+    private String link;
+    private String category;
+    private Integer score = 0;
+    private String author;
+    private Integer password;
 
     public PostVO toVO(){
         return PostVO.builder()
