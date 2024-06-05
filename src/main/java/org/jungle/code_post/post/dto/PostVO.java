@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.jungle.code_post.post.entity.Post;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @RequiredArgsConstructor
@@ -17,7 +19,24 @@ public class PostVO {
     private final Integer score;
     private final String author;
     private final int password;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
+
+    public static PostVO from(Post post){
+        return PostVO.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .link(post.getLink())
+                .category(post.getCategory())
+                .score(post.getScore())
+                .author(post.getAuthor())
+                .password(post.getPassword())
+                .createdAt(post.getCreatedAt())
+                .updatedAt(post.getUpdatedAt())
+                .build();
+    }
     public Post toEntity(){
         return Post.builder()
                 .id(id)

@@ -20,7 +20,7 @@ public class PostResponseDTO {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public static PostResponseDTO of(Post post) {
+    public static PostResponseDTO of(PostVO post) {
         return PostResponseDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
