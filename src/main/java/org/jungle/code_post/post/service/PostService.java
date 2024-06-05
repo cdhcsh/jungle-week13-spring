@@ -4,7 +4,10 @@ import org.jungle.code_post.post.dto.PostResponseDTO;
 import org.jungle.code_post.post.dto.PostVO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface PostService {
+    public List<PostResponseDTO> getAllPost();
     public PostResponseDTO insertPost(PostVO postDTO);
 }
