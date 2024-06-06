@@ -25,7 +25,7 @@ public class PostServiceNoAuth implements PostService{
     }
 
     @Override
-    public List<PostResponseDTO> getAllPost() {
+    public List<PostResponseDTO> findAllPost() {
         return postRepository.findAll().stream()
                 .map(PostResponseDTO::of)
                 .collect(Collectors.toList());

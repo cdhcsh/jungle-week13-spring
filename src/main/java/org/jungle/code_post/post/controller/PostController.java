@@ -25,7 +25,7 @@ public class PostController {
 
     @GetMapping
     public List<PostResponseDTO> findAllPost(){
-        return postService.getAllPost();
+        return postService.findAllPost();
     }
     @PostMapping
     public PostResponseDTO createPost(@RequestBody PostCreateRequestDTO requestDTO) {
