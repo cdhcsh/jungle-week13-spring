@@ -9,7 +9,10 @@ import java.util.List;
 @Service
 public interface PostService {
     public PostResponseDTO findPostById(Long id);
+
     public List<PostResponseDTO> findAllPost();
 
-    public PostResponseDTO insertPost(PostVO postDTO);
+    public PostResponseDTO insertPost(PostVO postVo);
+
+    public PostResponseDTO updatePost(Long id,PostVO postVO);
 }
