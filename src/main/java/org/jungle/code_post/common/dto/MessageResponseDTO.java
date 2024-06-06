@@ -8,8 +8,6 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiResponseDTO<T> {
-    private Integer code;
-    private T data;
+public class MessageResponseDTO {
     private String message;
 }

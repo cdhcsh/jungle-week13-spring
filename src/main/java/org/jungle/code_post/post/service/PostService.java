@@ -1,5 +1,6 @@
 package org.jungle.code_post.post.service;
 
+import org.jungle.code_post.common.dto.MessageResponseDTO;
 import org.jungle.code_post.post.dto.PostResponseDTO;
 import org.jungle.code_post.post.dto.PostVO;
 import org.springframework.stereotype.Service;
@@ -15,4 +16,7 @@ public interface PostService {
     public PostResponseDTO insertPost(PostVO postVo);
 
     public PostResponseDTO updatePost(Long id,PostVO postVO);
+
+    public MessageResponseDTO deletePost(Long id,PostVO postVO);
+
 }
