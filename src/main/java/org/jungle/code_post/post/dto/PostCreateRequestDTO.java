@@ -1,7 +1,6 @@
 package org.jungle.code_post.post.dto;
 
 import lombok.*;
-import org.jungle.code_post.post.entity.Post;
 
 @Getter
 @Setter
