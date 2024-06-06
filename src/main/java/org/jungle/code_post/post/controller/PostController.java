@@ -18,6 +18,11 @@ public class PostController {
     @Autowired
     PostService postService = new PostServiceNoAuth();
 
+    @GetMapping("/{id}")
+    public PostResponseDTO findPost(@PathVariable Long id){
+        return postService.findPostById(id);
+    }
+
     @GetMapping
     public List<PostResponseDTO> findAllPost(){
         return postService.getAllPost();
