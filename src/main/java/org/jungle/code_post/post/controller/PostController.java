@@ -1,7 +1,9 @@
 package org.jungle.code_post.post.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jungle.code_post.common.dto.MessageResponseDTO;
 import org.jungle.code_post.post.dto.PostCreateRequestDTO;
+import org.jungle.code_post.post.dto.PostDeleteRequestDTO;
 import org.jungle.code_post.post.dto.PostResponseDTO;
 import org.jungle.code_post.post.dto.PostUpdateRequestDTO;
 import org.jungle.code_post.post.service.PostService;
@@ -36,6 +38,12 @@ public class PostController {
     @PutMapping("/{id}")
     public PostResponseDTO updatePost(@PathVariable Long id, @RequestBody PostUpdateRequestDTO requestDTO){
         return postService.updatePost(id,requestDTO.toVO());
+    }
+
+
+    @DeleteMapping("/{id}")
+    public MessageResponseDTO deletePost(@PathVariable Long id, @RequestBody PostDeleteRequestDTO requestDTO){
+        return postService.deletePost(id,requestDTO.toVO());
     }
 
 }

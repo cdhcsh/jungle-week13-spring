@@ -1,5 +1,6 @@
 package org.jungle.code_post.post.service;
 
+import org.jungle.code_post.common.dto.MessageResponseDTO;
 import org.jungle.code_post.post.dto.PostResponseDTO;
 import org.jungle.code_post.post.dto.PostVO;
 import org.jungle.code_post.post.entity.Post;
@@ -53,5 +54,16 @@ public class PostServiceNoAuth implements PostService {
         post.setScore(postVO.getScore());
 
         return PostResponseDTO.of(postRepository.save(post));
+    }
+
+    @Override
+    public MessageResponseDTO deletePost(Long id,PostVO postVO) {
+        Optional<Post> findPost = postRepository.findById(id);
+        if (findPost.isEmpty())
+            return new MessageResponseDTO("Post not found.");
+        if (findPost.get().getPassword() != postVO.getPassword())
+            return new MessageResponseDTO("Password not matched");
+        postRepository.delete(findPost.get());
+        return new MessageResponseDTO("delete success!");
     }
 }
