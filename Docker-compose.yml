@@ -12,35 +12,30 @@
 #    environment:
 #      MYSQL_ROOT_PASSWORD: 1234
 #      MYSQL_DATABASE: post
+version: '3.8'
+
 services:
-  database:
-    container_name: mysql_db
-    image: mysql:8.0.33
-    restart: on-failure
-    volumes:
-      - ./db/mysql/data:/var/lib/mysql
-    command:
-      - '--character-set-server=utf8mb4'
-      - '--collation-server=utf8mb4_unicode_ci'
+  db:
+    image: mysql:8.0
+    restart: always
     environment:
-      MYSQL_DATABASE: post
-      MYSQL_PASSWORD: 1234
-      MYSQL_USER: post
-      MYSQL_ROOT_HOST: '%'
       MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: post
+      MYSQL_USER: post
+      MYSQL_PASSWORD: 1234
     ports:
       - "3306:3306"
-  application:
-    container_name: dev-spring
-    restart: on-failure
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+  app:
+    build: .
+    restart: always
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/post?useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/post
       SPRING_DATASOURCE_USERNAME: post
       SPRING_DATASOURCE_PASSWORD: 1234
     depends_on:
-      - database
+      - db
