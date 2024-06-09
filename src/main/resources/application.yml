@@ -18,6 +18,6 @@ jwt:
 
 logging:
   level:
-    root : debug
+    org.jungle.code_post : debug
     org.hibernate.SQL: debug
     org.hibernate.type: trace
