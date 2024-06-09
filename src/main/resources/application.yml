@@ -12,7 +12,12 @@ spring:
       hibernate:
         format_sql: true
 
+jwt:
+  access-token-expiration-time: 86400000
+  secret: 2f2cbcfb5955e9f2ae796ee0988c3dbe15fb5446dc51df1f0244432b966b79de
+
 logging:
   level:
+    org.jungle.code_post : debug
     org.hibernate.SQL: debug
     org.hibernate.type: trace

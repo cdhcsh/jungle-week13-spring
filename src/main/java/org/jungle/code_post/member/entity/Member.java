@@ -2,6 +2,7 @@ package org.jungle.code_post.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DialectOverride;
 import org.jungle.code_post.common.entity.BaseTimestampEntity;
 
@@ -23,8 +24,9 @@ public class Member extends BaseTimestampEntity {
     @Column(nullable = false)
     private String password;
 
-    @Builder.Default
-    private MemberRole role = MemberRole.MEMBER_ROLE_USER;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private MemberRole role;
 
     public enum MemberRole{
         MEMBER_ROLE_ADMIN
