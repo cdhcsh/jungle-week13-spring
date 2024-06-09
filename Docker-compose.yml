@@ -30,8 +30,6 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
     ports:
       - "3306:3306"
-    networks:
-      - dev_network
   application:
     container_name: dev-spring
     restart: on-failure
@@ -46,8 +44,3 @@ services:
       SPRING_DATASOURCE_PASSWORD: 1234
     depends_on:
       - database
-    networks:
-      - dev_network
-
-networks:
-  dev_network:
