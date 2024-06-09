@@ -39,7 +39,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/post?userSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/post?useSSL=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1234
     depends_on:
