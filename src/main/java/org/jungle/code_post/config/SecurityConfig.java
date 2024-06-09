@@ -27,7 +27,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         //noinspection removal
-        http
+        return http
                 .csrf().disable()
                 .cors().disable()
                         .sessionManagement((sm)->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -37,16 +37,6 @@ public class SecurityConfig {
                                 .anyRequest().permitAll()
                         .and()
                                 .build();
-
-
-        http.sessionManagement((sm)->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        http.formLogin(FormLoginConfigurer::disable);
-        http.httpBasic(HttpBasicConfigurer::disable);
-
-        http.authorizeHttpRequests((auth)-> auth.anyRequest().permitAll());
-        http.addFilter(corsFilter());
-        return http.build();
     }
     @Bean
     public CorsFilter corsFilter() {
