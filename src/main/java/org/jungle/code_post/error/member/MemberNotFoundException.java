@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus;
 
 public class MemberNotFoundException extends CustomGlobalException {
     public MemberNotFoundException(){
-        super(HttpStatus.NOT_FOUND,"failed","일치하는 사용자가 없습니다.");
+        super(HttpStatus.NOT_FOUND,"failed","회원을 찾을 수 없습니다.");
     }
 }

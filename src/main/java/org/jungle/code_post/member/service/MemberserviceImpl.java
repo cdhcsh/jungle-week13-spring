@@ -3,7 +3,6 @@ package org.jungle.code_post.member.service;
 import lombok.extern.slf4j.Slf4j;
 import org.jungle.code_post.common.dto.MessageResponseDTO;
 import org.jungle.code_post.error.member.MemberNotFoundException;
-import org.jungle.code_post.error.member.MemberPasswordIncorrectException;
 import org.jungle.code_post.error.member.MemberUserNameDuplicateException;
 import org.jungle.code_post.member.dto.MemberInfoDTO;
 import org.jungle.code_post.member.dto.MemberVO;
@@ -40,7 +39,7 @@ public class MemberserviceImpl implements MemberService {
         Optional<Member> findMember = memberRepository.findByUsername(memberVO.getUsername());
         Member member = findMember.orElseThrow(MemberNotFoundException::new);
         if(!passwordEncoder.matches(memberVO.getPassword(),member.getPassword()))
-            throw new MemberPasswordIncorrectException();
+            throw new MemberNotFoundException();
         return MemberInfoDTO.of(member);
     }
 }

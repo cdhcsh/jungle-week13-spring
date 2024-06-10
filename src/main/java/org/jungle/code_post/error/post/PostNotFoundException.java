@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus;
 
 public class PostNotFoundException extends CustomGlobalException {
     public PostNotFoundException(){
-        super(HttpStatus.NOT_FOUND,"failed","post not found");
+        super(HttpStatus.NOT_FOUND,"failed","게시물을 찾을 수 없습니다.");
     }
 }

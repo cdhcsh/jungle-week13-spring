@@ -34,8 +34,6 @@ public class PostUpdateRequestDTO {
     @NotNull
     private Integer score = 0;
 
-    @NotNull
-    private Integer password;
 
     public PostVO toVO(){
         return PostVO.builder()
@@ -44,7 +42,6 @@ public class PostUpdateRequestDTO {
                 .link(link)
                 .category(category)
                 .score(score)
-                .password(password)
                 .build();
     }
 }

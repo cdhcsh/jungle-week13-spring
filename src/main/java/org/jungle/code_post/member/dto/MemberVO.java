@@ -15,7 +15,7 @@ public class MemberVO {
 
     private Member.MemberRole role = Member.MemberRole.MEMBER_ROLE_USER;
 
-    public static MemberVO from(Member member){
+    public static MemberVO of(Member member){
         return MemberVO.builder()
                 .id(member.getId())
                 .username(member.getUsername())
