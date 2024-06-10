@@ -2,7 +2,11 @@ package org.jungle.code_post.post.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.jungle.code_post.comment.entity.Comment;
 import org.jungle.code_post.common.entity.BaseTimestampEntity;
+import org.jungle.code_post.member.entity.Member;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,8 +36,6 @@ public class Post extends BaseTimestampEntity {
 
     @Column(nullable = false)
     private String author;
-
-    private int password;
 
 
 }

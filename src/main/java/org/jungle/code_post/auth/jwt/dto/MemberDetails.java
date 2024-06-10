@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jungle.code_post.member.dto.MemberInfoDTO;
+import org.jungle.code_post.member.entity.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +29,9 @@ public class MemberDetails implements UserDetails {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
-
+    public Member.MemberRole getRole(){
+        return member.getRole();
+    }
     @Override
     public String getPassword() {
         return member.getPassword();

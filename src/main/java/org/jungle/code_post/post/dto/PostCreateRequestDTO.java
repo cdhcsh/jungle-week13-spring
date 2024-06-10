@@ -34,13 +34,6 @@ public class PostCreateRequestDTO {
     @NotNull
     private Integer score = 0;
 
-    @NotNull
-    @NotBlank
-    @Length(max = 256)
-    private String author;
-
-    @NotNull
-    private Integer password;
 
     public PostVO toVO(){
         return PostVO.builder()
@@ -49,8 +42,6 @@ public class PostCreateRequestDTO {
                 .link(link)
                 .category(category)
                 .score(score)
-                .author(author)
-                .password(password)
                 .build();
     }
 }

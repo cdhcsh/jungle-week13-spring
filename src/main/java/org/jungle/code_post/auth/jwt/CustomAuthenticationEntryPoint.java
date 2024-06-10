@@ -28,7 +28,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         String responseBody = mapper.writeValueAsString(ApiResponseDTO.builder()
                 .code("failed")
-                .message("인가되지 않은 사용자입니다.")
+                .message("토큰이 유효하지 않습니다.")
                 .build());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.FORBIDDEN.value());
