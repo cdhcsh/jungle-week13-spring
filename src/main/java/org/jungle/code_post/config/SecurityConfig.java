@@ -26,13 +26,13 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.csrf(CsrfConfigurer::disable);
-        http.cors(CorsConfigurer::disable);
+        http.csrf(CsrfConfigurer<HttpSecurity>::disable);
+        http.cors(CorsConfigurer<HttpSecurity>::disable);
 
         http.sessionManagement((sm)->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.formLogin(FormLoginConfigurer::disable);
-        http.httpBasic(HttpBasicConfigurer::disable);
+        http.formLogin(FormLoginConfigurer<HttpSecurity>::disable);
+        http.httpBasic(HttpBasicConfigurer<HttpSecurity>::disable);
 
         http.authorizeHttpRequests((auth)-> auth.anyRequest().permitAll());
         return http.build();
