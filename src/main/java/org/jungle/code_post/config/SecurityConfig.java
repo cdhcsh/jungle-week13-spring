@@ -1,9 +1,16 @@
 package org.jungle.code_post.config;
 
 
-import lombok.RequiredArgsConstructor;
+import org.jungle.code_post.auth.ExceptionHandlerFilter;
+import org.jungle.code_post.auth.jwt.CustomAccessDeniedHandler;
+import org.jungle.code_post.auth.jwt.CustomAuthenticationEntryPoint;
+import org.jungle.code_post.auth.jwt.JwtTokenProvider;
+import org.jungle.code_post.auth.jwt.JwtAuthFilter;
+import org.jungle.code_post.auth.service.AuthDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
@@ -13,14 +20,22 @@ import org.springframework.security.config.annotation.web.configurers.HttpBasicC
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfig {
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private AuthDetailService authDetailService;
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
+    @Autowired
+    private ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
@@ -35,6 +50,14 @@ public class SecurityConfig {
 
         http.formLogin(FormLoginConfigurer<HttpSecurity>::disable);
         http.httpBasic(HttpBasicConfigurer<HttpSecurity>::disable);
+
+
+        http.addFilterBefore(new JwtAuthFilter(jwtTokenProvider,authDetailService), UsernamePasswordAuthenticationFilter.class);
+        http.exceptionHandling((exceptionHandling)->exceptionHandling
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler));
+        http.addFilterBefore(exceptionHandlerFilter, JwtAuthFilter.class);
+
 
         http.authorizeHttpRequests((auth)-> auth.anyRequest().permitAll());
         return http.build();
