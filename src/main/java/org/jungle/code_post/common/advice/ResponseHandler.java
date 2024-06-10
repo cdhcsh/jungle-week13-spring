@@ -13,7 +13,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @RestControllerAdvice(basePackages = {
         "org.jungle.code_post.post",
-        "org.jungle.code_post.member"})
+        "org.jungle.code_post.member",
+        "org.jungle.code_post.comment"})
 public class ResponseHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
