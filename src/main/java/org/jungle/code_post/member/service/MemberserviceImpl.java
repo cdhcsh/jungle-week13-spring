@@ -2,6 +2,9 @@ package org.jungle.code_post.member.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jungle.code_post.common.dto.MessageResponseDTO;
+import org.jungle.code_post.error.member.MemberNotFoundException;
+import org.jungle.code_post.error.member.MemberPasswordIncorrectException;
+import org.jungle.code_post.error.member.MemberUserNameDuplicateException;
 import org.jungle.code_post.member.dto.MemberInfoDTO;
 import org.jungle.code_post.member.dto.MemberVO;
 import org.jungle.code_post.member.entity.Member;
@@ -24,7 +27,7 @@ public class MemberserviceImpl implements MemberService {
     @Override
     public MessageResponseDTO insertMember(MemberVO memberVO) {
         if(memberRepository.existsByUsername(memberVO.getUsername()))
-            return new MessageResponseDTO("duplicate username");
+            throw new MemberUserNameDuplicateException();
         Member member = memberVO.toEntity();
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         member.setRole(Member.MemberRole.MEMBER_ROLE_USER);
@@ -35,16 +38,9 @@ public class MemberserviceImpl implements MemberService {
     @Override
     public MemberInfoDTO findMemberByUsername(MemberVO memberVO) {
         Optional<Member> findMember = memberRepository.findByUsername(memberVO.getUsername());
-        if(findMember.isEmpty()) {
-            log.debug("empty member");
-            return null;
-        }
-        Member member = findMember.get();
-        if(!passwordEncoder.matches(memberVO.getPassword(),member.getPassword())) {
-            log.debug("incorrect password");
-            return null;
-        }
-        log.debug(member.toString());
+        Member member = findMember.orElseThrow(MemberNotFoundException::new);
+        if(!passwordEncoder.matches(memberVO.getPassword(),member.getPassword()))
+            throw new MemberPasswordIncorrectException();
         return MemberInfoDTO.of(member);
     }
 }

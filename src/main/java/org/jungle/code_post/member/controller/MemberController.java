@@ -9,6 +9,7 @@ import org.jungle.code_post.member.dto.MemberInfoDTO;
 import org.jungle.code_post.member.service.MemberService;
 import org.jungle.code_post.member.service.MemberserviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,15 +24,13 @@ public class MemberController {
     private JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
 
     @PostMapping("/signup")
-    public MessageResponseDTO signup(@RequestBody AuthSignupRequestDTO requestDTO) {
+    public MessageResponseDTO signup(@Validated @RequestBody AuthSignupRequestDTO requestDTO) {
         return memberService.insertMember(requestDTO.toVO());
     }
 
     @PostMapping("/login")
-    public MessageResponseDTO login(@RequestBody AuthLoginRequestDTO requestDTO, HttpServletResponse response) {
+    public MessageResponseDTO login(@Validated @RequestBody AuthLoginRequestDTO requestDTO, HttpServletResponse response) {
         MemberInfoDTO member = memberService.findMemberByUsername(requestDTO.toVO());
-        if (member == null)
-            return new MessageResponseDTO("login failed");
         response.setHeader(JwtTokenProvider.AUTHORIZATION_HEADER, JwtTokenProvider.BEARER_PREFIX + jwtTokenProvider.generateToken(member));
         return new MessageResponseDTO("login success");
     }

@@ -1,6 +1,8 @@
 package org.jungle.code_post.post.service;
 
 import org.jungle.code_post.common.dto.MessageResponseDTO;
+import org.jungle.code_post.error.post.PostNotFoundException;
+import org.jungle.code_post.error.post.PostPasswordIncorrectException;
 import org.jungle.code_post.post.dto.PostResponseDTO;
 import org.jungle.code_post.post.dto.PostVO;
 import org.jungle.code_post.post.entity.Post;
@@ -22,7 +24,7 @@ public class PostServiceNoAuth implements PostService {
     @Override
     public PostResponseDTO findPostById(Long id) {
         Optional<Post> findPost = postRepository.findById(id);
-        return PostResponseDTO.of(findPost.get());
+        return PostResponseDTO.of(findPost.orElseThrow(PostNotFoundException::new));
     }
 
     @Override
@@ -40,12 +42,10 @@ public class PostServiceNoAuth implements PostService {
     @Override
     public PostResponseDTO updatePost(Long id, PostVO postVO) {
         Optional<Post> findPost = postRepository.findById(id);
-        if (findPost.isEmpty())
-            return null;
-        Post post = findPost.get();
+        Post post = findPost.orElseThrow(PostNotFoundException::new);
 
         if (post.getPassword() != postVO.getPassword())
-            return null;
+            throw new PostPasswordIncorrectException();
 
         post.setTitle(postVO.getTitle());
         post.setContent(postVO.getContent());
@@ -59,11 +59,10 @@ public class PostServiceNoAuth implements PostService {
     @Override
     public MessageResponseDTO deletePost(Long id,PostVO postVO) {
         Optional<Post> findPost = postRepository.findById(id);
-        if (findPost.isEmpty())
-            return new MessageResponseDTO("Post not found.");
-        if (findPost.get().getPassword() != postVO.getPassword())
-            return new MessageResponseDTO("Password not matched");
-        postRepository.delete(findPost.get());
+        Post post = findPost.orElseThrow(PostNotFoundException::new);
+        if (post.getPassword() != postVO.getPassword())
+            throw new PostPasswordIncorrectException();
+        postRepository.delete(post);
         return new MessageResponseDTO("delete success!");
     }
 }

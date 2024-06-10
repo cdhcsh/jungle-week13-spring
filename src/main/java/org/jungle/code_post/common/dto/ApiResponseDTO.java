@@ -9,7 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApiResponseDTO<T> {
-    private Integer code;
+    @Builder.Default
+    private String code = "success";
     private T data;
-    private String message;
+    @Builder.Default
+    private String message = "ok";
 }

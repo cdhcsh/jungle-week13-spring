@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,27 +28,15 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        //noinspection removal
-        return http
-                .csrf().disable()
-                .cors().disable()
-                        .sessionManagement((sm)->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                                .formLogin().disable()
-                        .httpBasic().disable()
-                        .authorizeHttpRequests()
-                                .anyRequest().permitAll()
-                        .and()
-                                .build();
-    }
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**",config);
-        return new CorsFilter(source);
+        http.csrf(CsrfConfigurer<HttpSecurity>::disable);
+        http.cors(CorsConfigurer<HttpSecurity>::disable);
+
+        http.sessionManagement((sm)->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.formLogin(FormLoginConfigurer<HttpSecurity>::disable);
+        http.httpBasic(HttpBasicConfigurer<HttpSecurity>::disable);
+
+        http.authorizeHttpRequests((auth)-> auth.anyRequest().permitAll());
+        return http.build();
     }
 }

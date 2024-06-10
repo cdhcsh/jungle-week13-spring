@@ -11,6 +11,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  messages:
+    basename: errors
 
 jwt:
   access-token-expiration-time: 86400000

@@ -1,12 +1,8 @@
 package org.jungle.code_post.common.advice;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.jungle.code_post.common.dto.ApiResponseDTO;
 import org.springframework.core.MethodParameter;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -14,10 +10,10 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = {
+        "org.jungle.code_post.post",
+        "org.jungle.code_post.member"})
 public class ResponseHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
@@ -26,13 +22,11 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
     }
 
     @Override
-    public ApiResponseDTO beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
+    public ApiResponseDTO<?> beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
                                              Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
                                              ServerHttpResponse response) {
 
         return ApiResponseDTO.builder()
-                .code(200)
-                .message("ok")
                 .data(body)
                 .build();
     }
