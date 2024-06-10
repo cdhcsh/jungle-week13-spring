@@ -3,7 +3,7 @@ package org.jungle.code_post.post.service;
 import lombok.extern.slf4j.Slf4j;
 import org.jungle.code_post.auth.jwt.dto.MemberDetails;
 import org.jungle.code_post.common.dto.MessageResponseDTO;
-import org.jungle.code_post.error.post.PostAccessDeniedException;
+import org.jungle.code_post.error.CustomAccessDeniedException;
 import org.jungle.code_post.error.post.PostNotFoundException;
 import org.jungle.code_post.member.entity.Member;
 import org.jungle.code_post.post.dto.PostResponseDTO;
@@ -51,7 +51,7 @@ public class PostServiceImpl implements PostService {
         Post post = findPost.orElseThrow(PostNotFoundException::new);
         if(!memberDetails.getRole().equals(Member.MemberRole.MEMBER_ROLE_ADMIN)
                 && !post.getAuthor().equals(memberDetails.getUsername()))
-            throw new PostAccessDeniedException();
+            throw new CustomAccessDeniedException();
 
         post.setTitle(postVO.getTitle());
         post.setContent(postVO.getContent());
@@ -68,7 +68,7 @@ public class PostServiceImpl implements PostService {
         Post post = findPost.orElseThrow(PostNotFoundException::new);
         if(!memberDetails.getRole().equals(Member.MemberRole.MEMBER_ROLE_ADMIN)
                 && !post.getAuthor().equals(memberDetails.getUsername()))
-            throw new PostAccessDeniedException();
+            throw new CustomAccessDeniedException();
         postRepository.delete(post);
         return new MessageResponseDTO("게시물 삭제가 완료되었습니다.");
     }

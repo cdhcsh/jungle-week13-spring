@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.jungle.code_post.comment.entity.Comment;
 import org.jungle.code_post.common.entity.BaseTimestampEntity;
-import org.jungle.code_post.member.entity.Member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -36,6 +36,13 @@ public class Post extends BaseTimestampEntity {
 
     @Column(nullable = false)
     private String author;
+
+    private int password;
+
+    @OneToMany(mappedBy = "post",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("createdAt desc")
+    @Builder.Default
+    private List<Comment> comments = new ArrayList<>();
 
 
 }

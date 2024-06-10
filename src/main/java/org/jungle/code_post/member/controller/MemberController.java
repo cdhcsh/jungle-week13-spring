@@ -32,6 +32,6 @@ public class MemberController {
     public MessageResponseDTO login(@Validated @RequestBody AuthLoginRequestDTO requestDTO, HttpServletResponse response) {
         MemberInfoDTO member = memberService.findMemberByUsername(requestDTO.toVO());
         response.setHeader(JwtTokenProvider.AUTHORIZATION_HEADER, JwtTokenProvider.BEARER_PREFIX + jwtTokenProvider.generateToken(member));
-        return new MessageResponseDTO("login success");
+        return new MessageResponseDTO("로그인에 성공했습니다.");
     }
 }

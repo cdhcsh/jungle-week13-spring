@@ -31,7 +31,7 @@ public class MemberserviceImpl implements MemberService {
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         member.setRole(Member.MemberRole.MEMBER_ROLE_USER);
         memberRepository.save(member);
-        return new MessageResponseDTO("signup success");
+        return new MessageResponseDTO("회원가입에 성공했습니다.");
     }
 
     @Override
